@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Kreddit</string>
+
+    <string name="title_activity_news_detail">NewsDetailActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+</resources>
