@@ -10,10 +10,16 @@ import android.support.v4.app.NavUtils
 import android.support.v4.view.MotionEventCompat
 import android.util.Log
 import android.view.*
+import com.github.ajalt.timberkt.Timber
+import io.navendra.kreddit.App
 import io.navendra.kreddit.MainActivity
 import io.navendra.kreddit.R
 import io.navendra.kreddit.viewmodels.NewsDetailViewModel
 import kotlinx.android.synthetic.main.activity_news_detail.*
+import android.support.v4.content.ContextCompat.startActivity
+import android.content.Intent
+import android.net.Uri
+
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -21,70 +27,38 @@ import kotlinx.android.synthetic.main.activity_news_detail.*
  */
 class NewsDetailActivity : Activity() {
 
-    val TAG = NewsDetailActivity::class.java.simpleName
+    lateinit var mViewModel : NewsDetailViewModel
 
-    lateinit var viewModel : NewsDetailViewModel
 
-    class listener(context:Context) : OnSwipeTouchListener(context){
-        override fun onSwipeRight() {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override fun onSwipeLeft() {
-
-        }
-
-        override fun onSwipeTop() {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override fun onSwipeBottom() {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_detail)
         card_view.setOnTouchListener(listener(this) )
-//        viewModel = ViewModelProvider
+        mViewModel = (application as App).getViewModel()
     }
 
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-    }
+    inner class listener(context:Context) : OnSwipeTouchListener(context){
+        override fun onSwipeRight() {
+            Timber.d { "onSwipeRight" }
 
+        }
 
+        override fun onSwipeLeft() {
+            Timber.d { "onSwipeLeft" }
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
+            startActivity(browserIntent)
+        }
 
+        override fun onSwipeTop() {
+            Timber.d { "onSwipeTop" }
+//
+        }
 
-    fun swipeUp(){}
+        override fun onSwipeBottom() {
+            Timber.d { "onSwipeBottom" }
 
-    fun swipeDown(){}
+        }
 
-    fun swipeRight(){}
-
-    fun swipeLeft(){}
-
-
-
-    companion object {
-        /**
-         * Whether or not the system UI should be auto-hidden after
-         * [AUTO_HIDE_DELAY_MILLIS] milliseconds.
-         */
-        private val AUTO_HIDE = true
-
-        /**
-         * If [AUTO_HIDE] is set, the number of milliseconds to wait after
-         * user interaction before hiding the system UI.
-         */
-        private val AUTO_HIDE_DELAY_MILLIS = 3000
-
-        /**
-         * Some older devices needs a small delay between UI widget updates
-         * and a change of the status and navigation bar.
-         */
-        private val UI_ANIMATION_DELAY = 300
     }
 }
